@@ -110,7 +110,7 @@ class StreamListener {
       if (messageData.length === 0) {
         return;
       }
-      await this.messageService.publish("persisted:shops", "event", messageData);
+      await this.messageService.publish("persisted.shops", "event", messageData);
       //update shop data in DB
       await this.shopRepository.upsertMany(messageData);
       this.retryCount = 0;
@@ -133,7 +133,7 @@ class StreamListener {
             stock: '',
             spawn_time: now,
           }];
-        await this.messageService.publish("persisted:weather", "event", messageData);
+        await this.messageService.publish("persisted.weather", "event", messageData);
         // DB update or notify about weather change can be handled here
         await this.weatherRepository.upsertMany([
           {
