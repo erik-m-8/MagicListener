@@ -127,6 +127,13 @@ class StreamListener {
       const prevWeather = this.weather;
       if (prevWeather !== incomingWeather) {
         this.weather = incomingWeather;
+        let messageData = [{
+            type: 'weather',
+            name: incomingWeather,
+            stock: '',
+            spawn_time: now,
+          }];
+        await this.messageService.publish("persisted:weather", "event", messageData);
         // DB update or notify about weather change can be handled here
         await this.weatherRepository.upsertMany([
           {
